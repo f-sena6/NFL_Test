@@ -14,11 +14,12 @@ from sklearn.neural_network import MLPClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.utils import shuffle
 from sklearn.decomposition import PCA
+from sklearn import preprocessing
 
 
 def get_pca(X):
 
-    pca = PCA(n_components=10)
+    pca = PCA(n_components=0.95)
     
     new_x = pca.fit_transform(X)
 
@@ -79,10 +80,18 @@ X = np.delete(X, 26, 1) # Delete Average Time Per Drive
 X, Y = shuffle(X, Y)
 
 print X.shape
+
+###############
+# Preproccess #
+###############
+
+#X = X/np.linalg.norm(X)
+X = preprocessing.scale(X) # Scale the data
+
 #################################
 # Use PCA to reduce the dataset #
 #################################
 
-X = get_pca(X)
+#X = get_pca(X)
 
 predict_winning_record(X, Y, 27) # Call the function
